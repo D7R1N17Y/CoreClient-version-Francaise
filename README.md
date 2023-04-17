@@ -18,6 +18,10 @@
 - [Muzu](https://github.com/MuzuBinks)
 - [Ayzu](https://github.com/AyzuDev)
 
+## :bust_in_silhouette: Remade 
+
+- [Onizuka](https://github.com/D7R1N17Y)
+
 ## :scroll: Sommaire
 
 - [:pushpin:  Tutorial](#tutorial)
