@@ -205,7 +205,7 @@ async def on_message_delete(message):
 async def on_connect():
  @bot.event
  async def on_ready():
-   await bot.change_presence(activity=discord.Streaming(name="> 𝑂𝑛𝑖𝑧𝑢𝑘𝑎‘", url="https://www.twitch.tv/Onizuka"))
+   await bot.change_presence(activity=discord.Streaming(name="Core Project", url="https://www.twitch.tv/@discord"))
    os.system('cls' if os.name == 'nt' else 'clear')
    acc_id = bot.get_user(int(compte_id))
    avatar_url = acc_id.avatar
@@ -284,10 +284,10 @@ async def ping(ctx):
 async def network(ctx):
     await ctx.message.delete()
     
-    github = "https://discord.gg/nU478htyx8"
-    discord_server = "https://discord.com/api/oauth2/authorize?client_id=1083431607802789939&permissions=8&scope=bot%20applications.commands"
+     github = "https://github.com/xCoreProject/CoreClient/"
+    discord_server = "https://discord.gg/M4DeuABSKz"
     
-    response = f"`Onizuka Network` :\n`Kashm | Support ғʀ :` {github}\n\n`Invite du bot :` {discord_server}"
+    response = f"`Core Network` :\n`Github:` {github}\n\n`Support:` {discord_server}"
     await ctx.send(response)
 
 ############################################################## H E L P ############################################################################
@@ -299,6 +299,7 @@ async def help(ctx):
     help_text = '''>>> ```       C O R E - P R O J Ǝ C T | V1.5       ```
 ☆, .- ~ * '¨¯¨' * · ~ -.¸--, .- ~ * '¨¯¨' * · ~ -.¸ ☆
 
+>`Create by Yanzu & Muzu & Ayzu` **with** :heart:
 >`Remade by Onizuka` 
 
 ***HELP PANEL :***
