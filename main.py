@@ -59,17 +59,17 @@ async def on_message(message):
         for attachment in message.attachments:
             if message.guild:
                 server_name = message.guild.name
-                channel_name = message.channel.name if isinstance(message.channel, discord.TextChannel) else "Direct Message"
+                channel_name = message.channel.name if isinstance(message.channel, discord.TextChannel) else "Message direct"
             else:
-                server_name = "Direct Message"
-                channel_name = "Direct Message"
+                server_name = "Message direct"
+                channel_name = "Message direct"
  
             embed = Embed(
-                title="New image",
+                title="Nouvelle image",
                 description=
-                f"Posted by: {message.author.name}#{message.author.discriminator} ({message.author.id})\n"
-                f"Posted at: {message.created_at}\n"
-                f"Server: {server_name}\n"
+                f"Posté par: {message.author.name}#{message.author.discriminator} ({message.author.id})\n"
+                f"Posté à: {message.created_at}\n"
+                f"Serveur: {server_name}\n"
                 f"Channel: {channel_name}",
                 color=0x00ff00)
             embed.set_image(url=attachment.url)
@@ -85,17 +85,17 @@ async def on_message(message):
         for url in urls:
             if message.guild:
                 server_name = message.guild.name
-                channel_name = message.channel.name if isinstance(message.channel, discord.TextChannel) else "Direct Message"
+                channel_name = message.channel.name if isinstance(message.channel, discord.TextChannel) else "Message direct"
             else:
-                server_name = "Direct Message"
-                channel_name = "Direct Message"
+                server_name = "Message direct"
+                channel_name = "Message direct"
  
             embed = Embed(
-                title="New URL",
+                title="Nouvelle URL",
                 description=
-                f"Posted by: {message.author.name}#{message.author.discriminator} ({message.author.id})\n"
-                f"Posted at: {message.created_at}\n"
-                f"Server: {server_name}\n"
+                f"Posté par: {message.author.name}#{message.author.discriminator} ({message.author.id})\n"
+                f"Posté à: {message.created_at}\n"
+                f"Serveur: {server_name}\n"
                 f"Channel: {channel_name}\n"
                 f"URL: {url}",
                 color=0x00ff00)
@@ -111,15 +111,15 @@ async def on_message(message):
 @bot.event
 async def on_message_edit(before, after):
   if before.content != after.content:
-    embed = Embed(title="Message edited", color=0xFFA500)
-    embed.add_field(name="Before", value=before.content, inline=False)
-    embed.add_field(name="After", value=after.content, inline=False)
+    embed = Embed(title="Message edité", color=0xFFA500)
+    embed.add_field(name="Avant", value=before.content, inline=False)
+    embed.add_field(name="Après", value=after.content, inline=False)
     embed.set_author(
       name=f"{before.author.name}#{before.author.discriminator}",
       icon_url=before.author.avatar)
-    embed.set_footer(text=f"Edited at: {after.edited_at}")
+    embed.set_footer(text=f"Edité par: {after.edited_at}")
     if before.guild:
-      embed.add_field(name="Server", value=before.guild.name, inline=True)
+      embed.add_field(name="Serveur", value=before.guild.name, inline=True)
       embed.add_field(name="Channel", value=before.channel.name, inline=True)
     else:
       embed.add_field(name="Channel", value="DM", inline=True)
@@ -132,8 +132,8 @@ async def on_message_delete(message):
   if message.attachments:
     for attachment in message.attachments:
       embed = Embed(
-        title="Deleted message",
-        description=f"The deleted message contained an image: {attachment.url}",
+        title="Message supprimé",
+        description=f"Le message supprimé contenait une image : {attachment.url}",
         color=0xFF5733,
       )
       embed.set_author(
@@ -141,14 +141,14 @@ async def on_message_delete(message):
         f"{message.author.name}#{message.author.discriminator} ({message.author.id})",
         icon_url=message.author.avatar,
       )
-      embed.set_footer(text=f"Deleted at: {message.created_at}")
+      embed.set_footer(text=f"Suprimé à: {message.created_at}")
       if message.guild:
-        embed.add_field(name="Server", value=message.guild.name, inline=True)
+        embed.add_field(name="Serveur", value=message.guild.name, inline=True)
         embed.add_field(name="Channel",
                         value=message.channel.name,
                         inline=True)
       else:
-        embed.add_field(name="Server", value="DM", inline=True)
+        embed.add_field(name="Serveur", value="DM", inline=True)
  
       payload = {"embeds": [embed.to_dict()]}
  
@@ -157,8 +157,8 @@ async def on_message_delete(message):
       requests.post(webhooklogs, data=json.dumps(payload), headers=headers)
   elif message.content:
     embed = Embed(
-      title="Deleted message",
-      description=f"The deleted message was: {message.content}",
+      title="Message supprimé",
+      description=f"Le message supprimé était: {message.content}",
       color=0xFF5733,
     )
     embed.set_author(
@@ -166,12 +166,12 @@ async def on_message_delete(message):
       f"{message.author.name}#{message.author.discriminator} ({message.author.id})",
       icon_url=message.author.avatar,
     )
-    embed.set_footer(text=f"Deleted at: {message.created_at}")
+    embed.set_footer(text=f"Supprimé à: {message.created_at}")
     if message.guild:
-      embed.add_field(name="Server", value=message.guild.name, inline=True)
+      embed.add_field(name="Serveur", value=message.guild.name, inline=True)
       embed.add_field(name="Channel", value=message.channel.name, inline=True)
     else:
-      embed.add_field(name="Server", value="DM", inline=True)
+      embed.add_field(name="Serveur", value="DM", inline=True)
  
     payload = {"embeds": [embed.to_dict()]}
  
@@ -180,8 +180,8 @@ async def on_message_delete(message):
     requests.post(webhooklogs, data=json.dumps(payload), headers=headers)
   else:
     embed = Embed(
-      title="Deleted message",
-      description="The deleted message contained no text or attachments.",
+      title="Message supprimé",
+      description="Le message supprimé ne contenait ni texte ni pièce jointe.",
       color=0xFF5733,
     )
     embed.set_author(
@@ -189,12 +189,12 @@ async def on_message_delete(message):
       f"{message.author.name}#{message.author.discriminator} ({message.author.id})",
       icon_url=message.author.avatar,
     )
-    embed.set_footer(text=f"Deleted at: {message.created_at}")
+    embed.set_footer(text=f"Supprimé à: {message.created_at}")
     if message.guild:
-      embed.add_field(name="Server", value=message.guild.name, inline=True)
+      embed.add_field(name="Serveur", value=message.guild.name, inline=True)
       embed.add_field(name="Channel", value=message.channel.name, inline=True)
     else:
-      embed.add_field(name="Server", value="DM", inline=True)
+      embed.add_field(name="Serveur", value="DM", inline=True)
  
     payload = {"embeds": [embed.to_dict()]}
  
@@ -205,24 +205,24 @@ async def on_message_delete(message):
 async def on_connect():
  @bot.event
  async def on_ready():
-   await bot.change_presence(activity=discord.Streaming(name="Core Project", url="https://www.twitch.tv/@discord"))
+   await bot.change_presence(activity=discord.Streaming(name="> 𝑂𝑛𝑖𝑧𝑢𝑘𝑎‘", url="https://www.twitch.tv/Onizuka"))
    os.system('cls' if os.name == 'nt' else 'clear')
    acc_id = bot.get_user(int(compte_id))
    avatar_url = acc_id.avatar
    data = {"username": bot.user.name,"pfp_link": str(avatar_url)}
-   r = requests.post("https://core-client-api.xcoreproject.repl.co/api/notifier", json=data)
+   r = requests.post("", json=data)
    print(Fore.YELLOW + 'User: ' + Fore.RESET + bot.user.name, end='\n\n')
-   print(Style.BRIGHT + Fore.GREEN + "The on_connect event fired successfully, good use!" + Style.RESET_ALL)
+   print(Style.BRIGHT + Fore.GREEN + "L'événement on_connect s'est déclenché avec succès, bonne utilisation !" + Style.RESET_ALL)
 
 async def main():
  await on_connect()
- print(Style.BRIGHT + Fore.MAGENTA + "Starting the app." + Style.RESET_ALL)
- print(Style.BRIGHT + Fore.MAGENTA + "The application is running. Please wait.." + Style.RESET_ALL)
+ print(Style.BRIGHT + Fore.MAGENTA + "Lancement de l'app." + Style.RESET_ALL)
+ print(Style.BRIGHT + Fore.MAGENTA + "L'application est en cours d'exécution. Veuillez patienter..." + Style.RESET_ALL)
  
  animation_texte = "|/-\\"
  for i in range(10):
    time.sleep(0.1)
-   sys.stdout.write("\r" + "Loading " + animation_texte[i % len(animation_texte)])
+   sys.stdout.write("\r" + "Chargement" + animation_texte[i % len(animation_texte)])
    sys.stdout.flush()
    
 asyncio.run(main())
@@ -230,7 +230,7 @@ asyncio.run(main())
 @bot.event
 async def on_command_error(ctx, error):
   if isinstance(error, commands.CommandNotFound):
-    await ctx.send("Command not found. Please check the syntax.")
+    await ctx.send("Commande non trouvée. Veuillez vérifier la syntaxe.")
 
 ############################################################## C O M M A N D S ####################################################################
 
@@ -241,7 +241,7 @@ async def setactivity(ctx, act_type: str, *, message: str):
     await ctx.message.delete()
     if not message:
         await ctx.send(
-            f'[ERROR]: Invalid input! Command: {bot.command_prefix}{act_type} <message>'
+            f'[ERROR]: Entrée non valide! Commande: {bot.command_prefix}{act_type} <message>'
         )
         return
     activity_type = {
@@ -252,7 +252,7 @@ async def setactivity(ctx, act_type: str, *, message: str):
     }.get(act_type.lower())
     if activity_type is None:
         await ctx.send(
-            f'[❌]: ```Invalid activity type! Available types: streaming, game, listen, watch```'
+            f'[❌]: ```Type d activité non valide! Types disponibles: streaming, game, listen, watch```'
         )
         return
     if act_type.lower() == "streaming":
@@ -277,17 +277,17 @@ async def stopactivity(ctx):
 async def ping(ctx):
     await ctx.message.delete()
     latency = bot.latency * 1000 # Convert to milliseconds
-    message = f"My latency is {latency:.2f}ms"
+    message = f"Ma latence est de {latency:.2f}ms"
     await ctx.send(message)
 
 @bot.command()
 async def network(ctx):
     await ctx.message.delete()
     
-    github = "https://github.com/xCoreProject/CoreClient/"
-    discord_server = "https://discord.gg/M4DeuABSKz"
+    github = "https://discord.gg/nU478htyx8"
+    discord_server = "https://discord.com/api/oauth2/authorize?client_id=1083431607802789939&permissions=8&scope=bot%20applications.commands"
     
-    response = f"`Core Network` :\n`Github:` {github}\n\n`Support:` {discord_server}"
+    response = f"`Onizuka Network` :\n`Kashm | Support ғʀ :` {github}\n\n`Invite du bot :` {discord_server}"
     await ctx.send(response)
 
 ############################################################## H E L P ############################################################################
@@ -296,23 +296,23 @@ async def network(ctx):
 @bot.command()
 async def help(ctx):
     await ctx.message.delete()
-    help_text = '''>>> ```       C O R E - P R O J Ǝ C T | V1       ```
+    help_text = '''>>> ```       C O R E - P R O J Ǝ C T | V1.5       ```
 ☆, .- ~ * '¨¯¨' * · ~ -.¸--, .- ~ * '¨¯¨' * · ~ -.¸ ☆
 
->`By Yanzu & Muzu & Ayzu` **with** :heart:
+>`Remade by Onizuka` 
 
-***NO SKID PLS THX :)***
+***HELP PANEL :***
 **Prefix : &**
-`network` ㇱ
+`&network` ㇱ
 
-`status` 
-`clean` 
-`guild` 
-`account` 
-`utils` 
+`&status` 
+`&clean` 
+`&guild` 
+`&account` 
+`&utils` 
 
 ☆, .- ~ * '¨¯¨' * · ~ -.¸--, .- ~ * '¨¯¨' * · ~ -.¸ ☆
-```       C O R E - P R O J Ǝ C T | V1       ```'''
+```       C O R E - P R O J Ǝ C T | V1.5       ```'''
     await ctx.send(help_text)
 
 @bot.command()
@@ -323,15 +323,13 @@ async def status(ctx):
 
 **Prefix : &**
 
-||RPC SOON ON V2||
+`&setactivity {args} [message]` => `Charger le statut personnalisé`
+`Exemple :`  `&setactivity streaming Remade Onizuka`
 
-`setactivity {args} [message]` => `Load custom status`
-`[+]`  `&setactivity streaming Core Self`
-
-`>stopactivity` => `Stop custom status`
+`&stopactivity` => `Arrêter le statut personnalisé`
 
 ☆, .- ~ * '¨¯¨' * · ~ -.¸--, .- ~ * '¨¯¨' * · ~ -.¸ ☆
-```       C O R E - P R O J Ǝ C T | V1       ```'''
+```       C O R E - P R O J Ǝ C T | V1.5       ```'''
     await ctx.send(help_text)
 
 @bot.command()
@@ -342,12 +340,12 @@ async def clean(ctx):
 
 **Prefix : &**
 
-`cleardm` => `Remove all DMs from your account`
-`clears` => `Remove all channels from your server (Useful in case of raid)`
-`clear_logs` => `Clear the logs`
+`&cleardm` => `Supprimez tous les DM de votre compte`
+`&clears` => `Supprimer tous les channels de votre serveur (utile en cas de raid)`
+`&clear_logs` => `Effacer les logs`
 
 ☆, .- ~ * '¨¯¨' * · ~ -.¸--, .- ~ * '¨¯¨' * · ~ -.¸ ☆
-```       C O R E - P R O J Ǝ C T | V1       ```'''
+```       C O R E - P R O J Ǝ C T | V1.5       ```'''
     await ctx.send(help_text)
     
 @bot.command()
@@ -356,20 +354,20 @@ async def guild(ctx):
     help_text = '''>>> `=================== G U I L D ㊍ ====================`
 ☆, .- ~ * '¨¯¨' * · ~ -.¸--, .- ~ * '¨¯¨' * · ~ -.¸ ☆
 
-**Prefix : &**  
+**Prefix : &**
 
-`copy` => `Makes a copy of the server where the command was made`
-`emoteclone {id1} [id2]` => `Clone emojis from a server`
-`[+]`  `&emoteclone (ID of the server where the emojis are) (ID Where you want the emotes to be cloned)`
+`&copy` => `Fait une copie du serveur où la commande a été faite`
+`&emoteclone {id1} [id2]` => `Cloner des emojis à partir d'un serveur`
+`Exemple :`  `&emoteclone (ID du serveur où se trouvent les emojis) (ID où vous voulez que les emotes soient clonées)`
 
-`guildscrap` => `Scrap the pp and server banner`
-`guildall` => `Allows you to leave the chosen servers`
-`massmention` => `Mention 50 people from the server`
-`connectvc {ID}` => `Connect to the channel indicated`
-`leavevc` => `Leave to the channel indicated`
+`&guildscrap` => `Leak de la bannière et pp du serveur`
+`&guildall` => `Permet de quitter les serveurs choisis`
+`&massmention` => `Mentionner 50 personnes du serveur`
+`&connectvc {ID}` => `Se connecter au channel indiqué`
+`&leavevc` => `Quitter le channel indiqué`
 
 ☆, .- ~ * '¨¯¨' * · ~ -.¸--, .- ~ * '¨¯¨' * · ~ -.¸ ☆
-```       C O R E - P R O J Ǝ C T | V1       ```'''
+```       C O R E - P R O J Ǝ C T | V1.5       ```'''
     await ctx.send(help_text)    
 
 @bot.command()
@@ -380,12 +378,12 @@ async def account(ctx):
 
 **Prefix : &**
 
-`dmallf {message}` => `Send the message to all your friends`
-`leave_group` => `Leave all groups`
-`anti_group {on/off}` => `Leaves instantly if you are invited to a group`
+`&dmallf {message}` => `Envoyez le message à tous vos amis`
+`&leave_group` => `Quitter tous les groupes`
+`&anti_group {on/off}` => `Quitter instantanément si vous êtes invité à un groupe`
 
 ☆, .- ~ * '¨¯¨' * · ~ -.¸--, .- ~ * '¨¯¨' * · ~ -.¸ ☆
-```       C O R E - P R O J Ǝ C T | V1       ```'''
+```       C O R E - P R O J Ǝ C T | V1.5       ```'''
     await ctx.send(help_text)   
 
 @bot.command()
@@ -396,15 +394,15 @@ async def utils(ctx):
 
 **Prefix : &**
 
-`geoip {ip}` => `Locate IP`
-`pingweb {url}` => `Ping Website`
-`ping` => `Your ping`
-`pp` => `Get the user's pp via their id`
-`copyembed {ID}` => `Copy Embed`
-`embed {webhook} [embed json code]` => `Create Embed`
+`&geoip {ip}` => `Localiser une IP`
+`&pingweb {url}` => `Ping d'un site web`
+`&ping` => `Ton ping`
+`&pp` => `Obtenir la pp de l'utilisateur via son identifiant`
+`&copyembed {ID}` => `Copier un embed`
+`&embed {webhook} [embed code json]` => `Créer un embed`
 
 ☆, .- ~ * '¨¯¨' * · ~ -.¸--, .- ~ * '¨¯¨' * · ~ -.¸ ☆
-```       C O R E - P R O J Ǝ C T | V1       ```'''
+```       C O R E - P R O J Ǝ C T | V1.5       ```'''
     await ctx.send(help_text)   
 
 ############################################################## G R O U P E ########################################################################
@@ -413,7 +411,7 @@ async def utils(ctx):
 async def leave_group(ctx):
   await ctx.message.delete()
   await ctx.send(
-    f"Do you want to leave all group chats? React with ✅ for yes, or ❌ for no."
+    f"Voulez-vous quitter toutes les discussions de groupe ? Réagissez par ✅ pour oui, ou ❌ pour non."
   )
   try:
     reaction, user = await bot.wait_for(
@@ -422,22 +420,22 @@ async def leave_group(ctx):
       check=lambda reaction, user: user == ctx.author and str(reaction.emoji
                                                               ) in ['✅', '❌'])
   except asyncio.TimeoutError:
-    await ctx.send("Timeout. Command canceled.")
+    await ctx.send("Délai d'attente. Commande annulée.")
     return
   if str(reaction.emoji) == '✅':
     try:
       for group in bot.private_channels:
         if isinstance(group, discord.GroupChannel):
           await group.leave()
-          await ctx.send(f'Left group: {group.name}')
-      await ctx.send('Left all groups.')
+          await ctx.send(f'Groupe quitté: {group.name}')
+      await ctx.send('Tout les groupes quittés')
     except Exception as e:
-      await ctx.send('An error occurred while leaving groups.')
+      await ctx.send('Une erreur s est produite lors du leave des groupes.')
       error_msg = traceback.format_exc()
       await send_error_log(error_msg)
       return
   else:
-    await ctx.send("Command canceled.")
+    await ctx.send("Commande annulé.")
 
 
 @bot.command()
@@ -446,13 +444,13 @@ async def anti_group(ctx, state):
   global anti_group_enabled
   if state.lower() == "on":
     anti_group_enabled = True
-    await ctx.send("Anti-group mode is now enabled.")
+    await ctx.send("Anti-group mode est désormais activée.")
   elif state.lower() == "off":
     anti_group_enabled = False
-    await ctx.send("Anti-group mode is now disabled.")
+    await ctx.send("Anti-group mode est désormais désactivé.")
   else:
     await ctx.send(
-      "Invalid command. Use '!anti_group on' or '!anti_group off' to enable/disable anti-group mode."
+      "Commande non valide. Utilisez '&anti_group on' ou '&anti_group off' pour activer/désactiver le mode anti-groupe."
     )
     return
 
@@ -462,7 +460,7 @@ async def on_private_channel_create(channel):
   global anti_group_enabled
   if isinstance(channel, discord.GroupChannel) and anti_group_enabled:
     await channel.leave()
-    await channel.send(f"Sorry, I don't join group chats.")
+    await channel.send(f"Désolé, je ne rejoint pas aux discussions de groupe.")
 
 
 @bot.event
@@ -476,7 +474,7 @@ async def on_error(event_method, *args, **kwargs):
 async def cleardm(ctx):
   await ctx.message.delete()
   await ctx.send(
-    "Do you want to delete all direct messages? React with ✅ for yes, or ❌ for no."
+    "Voulez-vous supprimer tous les messages directs ? Réagissez par ✅ pour oui, ou ❌ pour non."
   )
   try:
     reaction, user = await bot.wait_for(
@@ -485,37 +483,37 @@ async def cleardm(ctx):
       check=lambda reaction, user: user == ctx.author and str(reaction.emoji
                                                               ) in ['✅', '❌'])
   except asyncio.TimeoutError:
-    await ctx.send("Timeout. Command canceled.")
+    await ctx.send("Délai d'attente. Commande annulée.")
     return
   if str(reaction.emoji) == '✅':
     await ctx.send(
-      "Deleting all direct messages in 5 seconds. This may take a while...")
+      "Suppression de tous les messages directs en 5 secondes. Cela peut prendre un certain temps...")
     await asyncio.sleep(5)
     try:
       for channel in bot.private_channels:
         if isinstance(channel, discord.DMChannel):
-          await ctx.send(f"Deleting messages in {channel}...")
+          await ctx.send(f"Suppression des messages dans {channel}...")
           async for msg in channel.history(limit=None):
             if msg.author == bot.user:
               await msg.delete()
               await asyncio.sleep(random.randint(2, 5))
-          await ctx.send(f"Finished deleting messages in {channel}.")
-      await ctx.send("Done deleting all direct messages!")
+          await ctx.send(f"Fin de la suppression des messages dans {channel}.")
+      await ctx.send("Suppression de tous les messages directs !")
     except Exception as e:
       error_msg = traceback.format_exc()
       await send_error_log(error_msg)
-      await ctx.send(f"An error occurred while deleting DMs: {e}")
+      await ctx.send(f"Une erreur s'est produite lors de la suppression des DM : {e}")
   else:
-    await ctx.send("Command canceled.")
+    await ctx.send("Commande annulé.")
     
 @bot.command()
 async def clears(ctx):
   await ctx.message.delete()
   if ctx.guild is None:
-    return await ctx.send("This command can only be executed on a server.")
+    return await ctx.send("Cette commande ne peut être exécutée que sur un serveur.")
 
   confirm_msg = await ctx.send(
-    "Are you sure you want to delete all channels in this server? React with ✅ to confirm, otherwise react with ❌."
+    "Êtes-vous sûr de vouloir supprimer tous les canaux de ce serveur ? Réagissez avec ✅ pour confirmer, sinon réagissez avec ❌."
   )
 
   def check(reaction, user):
@@ -525,11 +523,11 @@ async def clears(ctx):
     reaction, _ = await bot.wait_for('reaction_add', timeout=60.0, check=check)
   except asyncio.TimeoutError:
     await confirm_msg.delete()
-    return await ctx.send("Time elapsed. Canceling deletion of channels.")
+    return await ctx.send("Temps écoulé. Annulation de la suppression des channels.")
 
   if str(reaction.emoji) == '❌':
     await confirm_msg.delete()
-    return await ctx.send("Cancelled deletion of channels.")
+    return await ctx.send("Annulation de la suppression des chaînes.")
 
   total_deleted = 0
   for channel in ctx.guild.channels:
@@ -552,22 +550,22 @@ async def clear_logs(ctx):
             file_path = os.path.join(img_dir, file_name)
             if os.path.isfile(file_path):
                 os.remove(file_path)
-                print(f"File {file_name} successfully deleted.")
+                print(f"Fichier {file_name} supprimé avec succès.")
             elif os.path.isdir(file_path):
-                print(f"Folder {file_name} ignored.")
+                print(f"Dossier {file_name} ignoré.")
 
         url_file = "logs/url.txt"
         if os.path.isfile(url_file):
             with open(url_file, "w"):
                 pass
-            print("Contents of url.txt file deleted successfully.")
+            print("Contenu du fichier url.txt supprimé avec succès.")
         else:
-            print("File url.txt not found.")
+            print("Fichier url.txt introuvable.")
 
-        await ctx.send("Contents of 'img' folders and 'url.txt' file deleted successfully!")
+        await ctx.send("Le contenu des dossiers 'img' et le fichier 'url.txt' ont été supprimés avec succès.")
     except Exception as e:
-        print(f"Error encountered during command execution: {e}")
-        await ctx.send("An error occurred while deleting the contents of the folders.")
+        print(f"Erreur rencontrée lors de l'exécution de la commande : {e}")
+        await ctx.send("Une erreur s'est produite lors de la suppression du contenu des dossiers.")
   
 
 ############################################################## D M A L L F ########################################################################
@@ -576,10 +574,10 @@ async def clear_logs(ctx):
 async def dmallf(ctx, *, message):
   await ctx.message.delete()
   if ctx.guild is not None:
-    return await ctx.send("This command can only be executed in DMs.")
+    return await ctx.send("Cette commande ne peut être exécutée que dans les DM.")
 
   confirm_msg = await ctx.send(
-    f"Are you sure you want to send the message \"{message}\" to all your friends? React with ✅ to send, otherwise react with ❌."
+    f"Êtes-vous sûr de vouloir envoyer le message \"{message}\" à tous vos amis ? Réagissez avec ✅ pour envoyer, sinon réagissez avec ❌."
   )
 
   def check(reaction, user):
@@ -589,11 +587,11 @@ async def dmallf(ctx, *, message):
     reaction, _ = await bot.wait_for('reaction_add', timeout=60.0, check=check)
   except asyncio.TimeoutError:
     await confirm_msg.delete()
-    return await ctx.send("Time elapsed. Canceling sending to all friends.")
+    return await ctx.send("Temps écoulé. Annulation de l'envoi à tous les amis.")
 
   if str(reaction.emoji) == '❌':
     await confirm_msg.delete()
-    return await ctx.send("Cancelled sending to all friends.")
+    return await ctx.send("Envoi annulé à tous les amis.")
 
   total_sent = 0
   for friend in bot.user.friends:
@@ -607,7 +605,7 @@ async def dmallf(ctx, *, message):
       continue
 
   sent_msg = await ctx.send(
-    f"The message \"{message}\" has been sent to \"{total_sent}\" friends.")
+    f"Le message \"{message}\" a été envoyé à \"{total_sent}\" amis.")
 
 ############################################################## T E R M I N A L ####################################################################
 
@@ -618,27 +616,27 @@ async def geoip(ctx, *, ip):
     if response.status_code == 200:
         data = response.json()
         if data["status"] == "success":
-            response_message = f"**Country:** {data['country']}\n**Region:** {data['regionName']}\n**City:** {data['city']}\n**Latitude:** {data['lat']}\n**Longitude:** {data['lon']}\n**ZIP:** {data['zip']}"
+            response_message = f"**Pays :** {data['country']}\n**Region:** {data['regionName']}\n**Ville:** {data['city']}\n**Latitude:** {data['lat']}\n**Longitude:** {data['lon']}\n**ZIP:** {data['zip']}"
         else:
-            response_message = "Unable to geolocate IP address"
+            response_message = "Impossible de géolocaliser l'adresse IP"
     else:
-        response_message = "Unable to geolocate IP address"
+        response_message = "Impossible de géolocaliser l'adresse IP"
     await ctx.send(response_message)
         
 @bot.command()
 async def pingweb(ctx, website=None):
     await ctx.message.delete()
     if website is None:
-        await ctx.send(f'[ERROR]: Invalid input! Command: pingweb <website>')
+        await ctx.send(f'[ERROR]: Entrée non valide! Commande : pingweb <website>')
         return
     try:
         r = requests.get(website).status_code
     except Exception as e:
         print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}" + Fore.RESET)
     if r == 404:
-        await ctx.send(f'Website **down** *({r})*', delete_after=3)
+        await ctx.send(f'Site web **en baisse** *({r})*', delete_after=3)
     else:
-        await ctx.send(f'Website **operational** *({r})*', delete_after=3)
+        await ctx.send(f'Site web **opérationnel** *({r})*', delete_after=3)
 
 @bot.command()
 async def copyembed(ctx, message_id: int, skip_personal_emojis: bool = True):
@@ -654,9 +652,9 @@ async def copyembed(ctx, message_id: int, skip_personal_emojis: bool = True):
                             field['emoji']['id'] = None
                 await ctx.send(f"```json\n{json.dumps(embed_json, indent=4)}\n```")
         else:
-            await ctx.send("This message does not contain an embed.")
+            await ctx.send("Ce message ne contient pas d'embed.")
     except Exception as e:
-        await ctx.send(f"An error has occurred: {e}")
+        await ctx.send(f"Une erreur s'est produite: {e}")
 
 
 
@@ -668,16 +666,16 @@ async def embed(ctx, webhook_url: str, *, embed_json: str):
     await ctx.message.delete()
     embed_dict = json.loads(embed_json)
     payload = {
-        "username": "Core",
+        "Nom d'utilisateur": "Core",
         "avatar_url": "https://cdn.discordapp.com/attachments/1089172315645952033/1093364102350520340/Sans_titre.png",
         "embeds": [embed_dict]
     }
 
     response = requests.post(webhook_url, json=payload)
     if response.status_code == 204:
-        await ctx.send("Embed sent successfully!")
+        await ctx.send("Embed envoyé avec succès!")
     else:
-        await ctx.send("Failed to send embed. Response code: " + str(response.status_code))
+        await ctx.send("Échec de l'envoi de l'embed. Code de réponse: " + str(response.status_code))
         
 
 ############################################################## G U I L D S ########################################################################
@@ -686,10 +684,10 @@ async def embed(ctx, webhook_url: str, *, embed_json: str):
 async def guildall(ctx):
     await ctx.message.delete()
     if len(bot.guilds) == 0:
-        return await ctx.send("This command can only be executed if the bot is in at least one server.")
+        return await ctx.send("Cette commande ne peut être exécutée que si le bot se trouve dans au moins un serveur..")
 
     for guild in bot.guilds:
-        confirm_msg = await ctx.send(f"Are you sure you want to leave {guild.name}? React with ✅ to confirm, ❌ to skip, or 1️⃣ to cancel.")
+        confirm_msg = await ctx.send(f"Êtes-vous sûr de vouloir partir ? {guild.name}? Réagissez avec ✅ pour confirmer, ❌ pour passer, ou 1️⃣ pour annuler.")
 
         def check(reaction, user):
             return user == ctx.author and str(reaction.emoji) in ['✅', '❌', '1️⃣']
@@ -698,41 +696,41 @@ async def guildall(ctx):
             reaction, _ = await bot.wait_for('reaction_add', timeout=60.0, check=check)
         except asyncio.TimeoutError:
             await confirm_msg.delete()
-            await ctx.send(f"Timed out for {guild.name}")
+            await ctx.send(f"Délai d'attente pour {guild.name}")
             continue
 
         if str(reaction.emoji) == '1️⃣':
             await confirm_msg.delete()
-            return await ctx.send("Cancelled deletion of servers.")
+            return await ctx.send("Annulation de la suppression des serveurs.")
 
         if str(reaction.emoji) == '❌':
             await confirm_msg.delete()
-            await ctx.send(f"Skipped {guild.name}")
+            await ctx.send(f"Ignoré {guild.name}")
             continue
 
         if str(reaction.emoji) == '✅':
             try:
                 await guild.leave()
-                await ctx.send(f"Successfully left {guild.name}")
+                await ctx.send(f"Leave avec réussie {guild.name}")
             except Exception as e:
-                await ctx.send(f"Failed to leave {guild.name}: {e}")
+                await ctx.send(f"Erreur leave {guild.name}: {e}")
 
 async def remove_all_recipients(channel):
     await asyncio.gather(*[channel.remove_recipient(r) for r in channel.recipients])
 
 @bot.command()
 async def copy(ctx):
-    print(f'Guild copy command created by {ctx.author.name} ({ctx.author.id})')
+    print(f'Commande de copie du serveur créée par {ctx.author.name} ({ctx.author.id})')
     await ctx.message.delete()
     await bot.create_guild(f'backup-{ctx.guild.name}')
-    print(f'New save guild created')
+    print(f'Création d un nouveau serveur de sauvegarde')
     await asyncio.sleep(4)
     for g in bot.guilds:
         if f'backup-{ctx.guild.name}' in g.name:
-            print(f'Found the new save guild: {g.name} ({g.id})')
+            print(f'J ai trouvé le nouveau serveur de sauvegarde: {g.name} ({g.id})')
             for c in g.channels:
                 await c.delete()
-                print(f'Channel {c.name} ({c.id}) removed from new save guild')
+                print(f'Channel {c.name} ({c.id}) retiré du nouveau serveur de la nouvelle sauvegarde')
             for role in reversed(ctx.guild.roles):
                 if role.name != "@everyone":
                     perms = discord.Permissions.none()
@@ -740,16 +738,16 @@ async def copy(ctx):
                         if value:
                             perms.update(**{perm: value})
                     new_role = await g.create_role(name=role.name, permissions=perms, colour=role.colour)
-                    print(f'Role {new_role.name} ({new_role.id}) created in new save guild')
+                    print(f'Role {new_role.name} ({new_role.id}) créé dans un nouveau serveur de sauvegarde')
             for cate in ctx.guild.categories:
                 x = await g.create_category(f"{cate.name}")
                 await x.edit(position=cate.position)
-                print(f'Category {x.name} ({x.id}) created in the new save guild')
+                print(f'Categorie {x.name} ({x.id}) créé dans le nouveau serveur de sauvegarde')
                 for chann in cate.channels:
                     if isinstance(chann, discord.VoiceChannel):
                         new_chan = await x.create_voice_channel(f"{chann}")
                         await new_chan.edit(position=chann.position, user_limit=chann.user_limit, bitrate=chann.bitrate, sync_permissions=True)
-                        print(f'Voice Channel {chann.name} ({chann.id}) created in category {x.name} ({x.id}) from the new save guild')
+                        print(f'Voice Channel {chann.name} ({chann.id}) créé dans la catégorie {x.name} ({x.id}) du le nouveau serveur de sauvegarde')
                     if isinstance(chann, discord.TextChannel):
                         new_chan = await x.create_text_channel(f"{chann}")
                         await new_chan.edit(position=chann.position, topic=chann.topic, slowmode_delay=chann.slowmode_delay, sync_permissions=True)
@@ -759,15 +757,15 @@ async def copy(ctx):
                                 new_role = discord.utils.get(g.roles, name=role.name)
                                 if new_role is not None:
                                     await new_chan.set_permissions(new_role, overwrite=perm)
-                        print(f'Text Channel {chann.name} ({chann.id}) created in category {x.name} ({x.id}) from the new save guild')
+                        print(f'Text Channel {chann.name} ({chann.id}) créé dans la catégorie {x.name} ({x.id}) du le nouveau serveur de sauvegarde')
     try:
         icon = await ctx.guild.icon.read()
         await g.edit(icon=icon)
-        print('New updated save guild icon')
+        print('Nouvelle icône de sauvegarde du serveur')
     except Exception as e:
         await ctx.send(f'[ERROR]: {e}')
-        print(f'An error occurred while updating the icon for the new save guild: {e}')
-    print(f'Guild Copy Order Completed')
+        print(f'Une erreur s est produite lors de la mise à jour de l icône du nouveau serveur de sauvegarde.: {e}')
+    print(f'Ccopies du serveur terminée')
 
 @bot.command()
 async def massmention(ctx, *, message=None):
@@ -787,16 +785,16 @@ async def guildscrap(ctx):
     await ctx.message.delete()
     try:
         if not ctx.guild.icon:
-            await ctx.send(f"**{ctx.guild.name}** has no icon")
+            await ctx.send(f"**{ctx.guild.name}** n'a pas d'icône")
         else:
-            await ctx.send(f"Guild Icon : {ctx.guild.icon}")
+            await ctx.send(f"Icône du serveur : {ctx.guild.icon}")
         if not ctx.guild.banner:
-            await ctx.send(f"**{ctx.guild.name}** has no banner")
+            await ctx.send(f"**{ctx.guild.name}** n'a pas de bannière")
         else:
-            await ctx.send(f"Guild Banne : {ctx.guild.banner}")
+            await ctx.send(f"Bannière du serveur : {ctx.guild.banner}")
     except Exception as e:
-        print(f"[ERROR] An error occurred while executing the guildscrap command : {e}")
-        await ctx.send(f"[ERROR] An error occurred while executing the guildscrap command : {e}")
+        print(f"[ERROR] Une erreur s'est produite lors de l'exécution de la commande &guildscrap : {e}")
+        await ctx.send(f"[ERROR] Une erreur s'est produite lors de l'exécution de la commande &guildscrap : {e}")
 
 @bot.command()
 async def pp(ctx, user_id: int):
@@ -804,17 +802,17 @@ async def pp(ctx, user_id: int):
     try:
         user = await bot.fetch_user(user_id)
         if not user.avatar:
-            await ctx.send(f"{user.name} has no profile picture")
+            await ctx.send(f"{user.name} n'a pas de photo de profil")
         else:
-            await ctx.send(f"{user.name}'s Profile Picture: {user.avatar}")
+            await ctx.send(f"{user.name} Image de profil: {user.avatar}")
     except Exception as e:
-        print(f"[ERROR] An error occurred while executing the userinfo command for user {user_id}: {e}")
-        await ctx.send(f"[ERROR] An error occurred while executing the userinfo command for user {user_id}: {e}")
+        print(f"[ERROR] Une erreur s'est produite lors de l'exécution de la commande userinfo pour l'utilisateur {user_id}: {e}")
+        await ctx.send(f"[ERROR] Une erreur s'est produite lors de l'exécution de la commande userinfo pour l'utilisateur {user_id}: {e}")
 
 
 @bot.command()
 async def emoteclone(ctx, source_id: int, target_id: int):
-    print(f"cloneemojis command called between {source_id} and {target_id}")
+    print(f"La commande &cloneemojis est appelée entre {source_id} et {target_id}")
     await ctx.message.delete()
     try:
 
@@ -829,7 +827,7 @@ async def emoteclone(ctx, source_id: int, target_id: int):
 
             response = requests.get(str(emoji.url))
             if response.status_code != 200:
-                print(f"Error while fetching image for emoji {emoji.name}")
+                print(f"Erreur lors de la récupération de l'image de l'emoji {emoji.name}")
                 continue
             try:
                 image = Image.open(BytesIO(response.content)).convert('RGBA')
@@ -838,17 +836,17 @@ async def emoteclone(ctx, source_id: int, target_id: int):
                 image_bytes.seek(0)
 
                 await target_server.create_custom_emoji(name=emoji.name, image=image_bytes.read())
-                print(f"Emoji {emoji.name} cloned successfully on the target server.")
+                print(f"Emoji {emoji.name} cloné avec succès sur le serveur cible.")
             except IOError:
-                print(f"Error while converting image for emoji {emoji.name}")
+                print(f"Erreur lors de la conversion d'une image en emoji {emoji.name}")
                 continue
 
             await asyncio.sleep(3)
 
-        await ctx.send("Emojis have been cloned successfully!")
+        await ctx.send("Les émojis ont été clonés avec succès!")
     except Exception as e:
-        print(f"Error encountered during command execution: {e}")
-        await ctx.send("An error occurred while cloning emojis.")
+        print(f"Erreur rencontrée lors de l'exécution de la commande: {e}")
+        await ctx.send("Une erreur s'est produite lors du clonage des emojis.")
 
 @bot.command()
 async def connectvc(ctx, channel_id: int):
@@ -857,11 +855,11 @@ async def connectvc(ctx, channel_id: int):
     if channel and channel.type == discord.ChannelType.voice:
         try:
             await channel.connect()
-            await ctx.send(f"Connected to voice channel: {channel.name}")
+            await ctx.send(f"Connecté au channel vocal: {channel.name}")
         except discord.errors.ClientException:
-            await ctx.send("Already connected to a voice channel.")
+            await ctx.send("Déjà connecté à un canal vocal.")
     else:
-        await ctx.send("Invalid voice channel ID.")
+        await ctx.send("ID de canal vocal non valide.")
 
 @bot.command()
 async def leavevc(ctx):
@@ -869,9 +867,9 @@ async def leavevc(ctx):
     voice = ctx.guild.voice_client
     if voice:
         await voice.disconnect()
-        await ctx.send("I logged out of the voice channel.")
+        await ctx.send("Je me suis déconnecté du canal vocal.")
     else:
-        await ctx.send("I am not connected to a voice channel.")
+        await ctx.send("Je ne suis pas connecté à un canal vocal.")
 
 ############################################################## C O M M A N D S ####################################################################
 
